@@ -8,7 +8,7 @@ import com.RafaelMSantos19.apiTransaction.service.PaymentPostService;
 import com.RafaelMSantos19.apiTransaction.service.PaymentPutService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/payment")
+@RequestMapping("/api/v1/payments")
 public class PaymentController {
 
     private final PaymentGetService paymentGetService;
@@ -48,22 +48,24 @@ public class PaymentController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, Object>> processPayment(
+    public ResponseEntity<Map<String, Object>> createPayment(
             @Valid @RequestBody PaymentRequestDTO paymentRequest) {
         
         try {
             System.out.println("JSON recebido: " + objectMapper.writeValueAsString(paymentRequest));
-
+    
             PaymentPostModel payment = new PaymentPostModel();
             payment.setDebitCode(paymentRequest.getDebitCode());
             payment.setCpfCnpj(paymentRequest.getCpfCnpj());
             payment.setPaymentMethod(paymentRequest.getPaymentMethod());
             payment.setCard(paymentRequest.getCard());
             payment.setValue(paymentRequest.getValue());
-
+    
             Map<String, Object> response = paymentPostService.service(payment);
-            return ResponseEntity.ok(response);
-
+            
+            
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    
         } catch (Exception e) {
             return ResponseEntity.badRequest()
                     .body(Map.of(
