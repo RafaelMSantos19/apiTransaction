@@ -1,5 +1,6 @@
 package com.RafaelMSantos19.apiTransaction.controller;
 
+import com.RafaelMSantos19.apiTransaction.model.PaymentStatus;
 import com.RafaelMSantos19.apiTransaction.dto.PaymentRequestDTO;
 import com.RafaelMSantos19.apiTransaction.model.PaymentPostModel;
 import com.RafaelMSantos19.apiTransaction.service.PaymentGetService;
@@ -10,10 +11,12 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/payment") 
+@RequestMapping("/payment")
 public class PaymentController {
 
     private final PaymentGetService paymentGetService;
@@ -49,10 +52,8 @@ public class PaymentController {
             @Valid @RequestBody PaymentRequestDTO paymentRequest) {
         
         try {
-            
             System.out.println("JSON recebido: " + objectMapper.writeValueAsString(paymentRequest));
 
-            
             PaymentPostModel payment = new PaymentPostModel();
             payment.setDebitCode(paymentRequest.getDebitCode());
             payment.setCpfCnpj(paymentRequest.getCpfCnpj());
@@ -60,7 +61,6 @@ public class PaymentController {
             payment.setCard(paymentRequest.getCard());
             payment.setValue(paymentRequest.getValue());
 
-            
             Map<String, Object> response = paymentPostService.service(payment);
             return ResponseEntity.ok(response);
 
@@ -73,14 +73,18 @@ public class PaymentController {
         }
     }
 
-    @PutMapping
-    public ResponseEntity<Map<String, Object>> updatePayment() {
-        try {
-            Map<String, Object> response = paymentPutService.service();
+    @PutMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> updatePaymentStatus(
+            @PathVariable Long id,
+            @RequestParam String status) {
+        
+        Map<String, Object> response = paymentPutService.updatePaymentStatus(id, status);
+        boolean success = (boolean) response.get("success");
+        
+        if (success) {
             return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError()
-                    .body(Map.of("error", e.getMessage()));
+        } else {
+            return ResponseEntity.badRequest().body(response);
         }
     }
 }
