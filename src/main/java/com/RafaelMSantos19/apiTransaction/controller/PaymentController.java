@@ -1,12 +1,14 @@
 package com.RafaelMSantos19.apiTransaction.controller;
 
 import com.RafaelMSantos19.apiTransaction.service.PaymentGetService;
+import com.RafaelMSantos19.apiTransaction.model.PaymentPostModel;
 import com.RafaelMSantos19.apiTransaction.service.PaymentPostService;
 import com.RafaelMSantos19.apiTransaction.service.PaymentPutService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.web.bind.annotation.*;
+
 
 import java.util.Collections;
 import java.util.Map;
@@ -36,8 +38,22 @@ public class PaymentController {
     }
 
     @PostMapping("/payment")
-    public Map<String, Object> processPayment() {
-        return paymentPostService.service();
+    public Map<String, Object> processPayment(@RequestBody PaymentPostModel paymentPostModel) {
+
+        
+        try {
+
+            System.out.println("Json Enviado na Request Post:");
+
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(paymentPostModel);
+            System.out.println(json);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return paymentPostService.service(paymentPostModel);   
     }
 
     @PutMapping("/payment")
