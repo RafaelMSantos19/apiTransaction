@@ -3,6 +3,8 @@ package com.RafaelMSantos19.apiTransaction.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import java.time.LocalDateTime;
 
 @Entity
@@ -41,8 +43,18 @@ public class PaymentPostModel {
     private LocalDateTime paymentDate = LocalDateTime.now();
 
     @Column(name = "status", nullable = false, length = 30)
-    private PaymentStatus status = PaymentStatus.PROCESSING_PENDING; 
+    private PaymentStatus status = PaymentStatus.PROCESSING_PENDING;
 
+    @JsonGetter("status")
+    public String getStatusDescription() {
+        return status != null ? status.getDescription() : null;
+    }
+    
+    
+    @JsonIgnore
+    public PaymentStatus getStatus() {
+        return status;
+    }
 
     public Long getId() {
         return id;
@@ -98,10 +110,6 @@ public class PaymentPostModel {
 
     public void setPaymentDate(LocalDateTime paymentDate) {
         this.paymentDate = paymentDate;
-    }
-
-    public PaymentStatus getStatus() { 
-        return status;
     }
 
     public void setStatus(PaymentStatus status) {

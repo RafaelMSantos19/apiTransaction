@@ -7,11 +7,16 @@ import com.RafaelMSantos19.apiTransaction.service.PaymentGetService;
 import com.RafaelMSantos19.apiTransaction.service.PaymentPostService;
 import com.RafaelMSantos19.apiTransaction.service.PaymentPutService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.validation.Valid;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -34,17 +39,21 @@ public class PaymentController {
         this.paymentPostService = paymentPostService;
         this.paymentPutService = paymentPutService;
         this.objectMapper = objectMapper;
+        
+        this.objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
     @GetMapping
-    public ResponseEntity<Map<String, Object>> getPayment() {
-        try {
-            Map<String, Object> response = paymentGetService.service();
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError()
-                    .body(Map.of("error", e.getMessage()));
-        }
+    public ResponseEntity<List<PaymentPostModel>> getPayments(
+            @RequestParam(required = false) String debitCode,
+            @RequestParam(required = false) String cpfCnpj,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate) {
+        
+        List<PaymentPostModel> payments = paymentGetService.service(debitCode, cpfCnpj, status, startDate, endDate);
+        return ResponseEntity.ok(payments);
     }
 
     @PostMapping
@@ -62,7 +71,6 @@ public class PaymentController {
             payment.setValue(paymentRequest.getValue());
     
             Map<String, Object> response = paymentPostService.service(payment);
-            
             
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
     
