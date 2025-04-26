@@ -13,7 +13,7 @@ public class PaymentStatusConverter implements AttributeConverter<PaymentStatus,
         if (status == null) {
             return null;
         }
-        return status.getDescription(); // Armazena a descrição no banco
+        return status.getDescription(); 
     }
 
     @Override
@@ -21,7 +21,7 @@ public class PaymentStatusConverter implements AttributeConverter<PaymentStatus,
         if (dbData == null) {
             return null;
         }
-        // Converte a string do banco de volta para o enum
+       
         return Arrays.stream(PaymentStatus.values())
                    .filter(s -> s.getDescription().equals(dbData))
                    .findFirst()
