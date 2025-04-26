@@ -1,5 +1,8 @@
 package com.RafaelMSantos19.apiTransaction.model;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public enum PaymentStatus {
     PROCESSING_PENDING("Pendente de Processamento"),
     PROCESSED("Processado com Sucesso"), 
@@ -15,7 +18,9 @@ public enum PaymentStatus {
         return description;
     }
 
-    public String getName() {
-        return this.name();
+    public static String[] getValidDescriptions() {
+        return Arrays.stream(values())
+                   .map(PaymentStatus::getDescription)
+                   .toArray(String[]::new);
     }
 }

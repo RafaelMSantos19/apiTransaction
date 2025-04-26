@@ -40,8 +40,7 @@ public class PaymentPostModel {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime paymentDate = LocalDateTime.now();
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false, length = 20)
+    @Column(name = "status", nullable = false, length = 30)
     private PaymentStatus status = PaymentStatus.PROCESSING_PENDING; 
 
 

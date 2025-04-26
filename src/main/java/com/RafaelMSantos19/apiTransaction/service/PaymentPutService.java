@@ -6,6 +6,7 @@ import com.RafaelMSantos19.apiTransaction.repository.PaymentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 
@@ -19,11 +20,16 @@ public class PaymentPutService {
     }
 
     @Transactional
-    public Map<String, Object> updatePaymentStatus(Long paymentId, String statusStr) {
+    public Map<String, Object> updatePaymentStatus(Long paymentId, String statusDescription) {
         try {
-            // Converter String para PaymentStatus
-            PaymentStatus newStatus = PaymentStatus.valueOf(statusStr.toUpperCase());
-            
+        
+            PaymentStatus newStatus = Arrays.stream(PaymentStatus.values())
+                .filter(s -> s.getDescription().equalsIgnoreCase(statusDescription))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(
+                    "Status inválido. Use: " + Arrays.toString(PaymentStatus.getValidDescriptions()))
+                );
+
             Optional<PaymentPostModel> paymentOpt = paymentRepository.findById(paymentId);
             
             if (paymentOpt.isEmpty()) {
@@ -39,9 +45,10 @@ public class PaymentPutService {
             if (!isValidStatusTransition(currentStatus, newStatus)) {
                 return Map.of(
                     "success", false,
-                    "message", "Transição de status inválida: " + currentStatus.getName() + " → " + newStatus.getName(),
-                    "currentStatus", currentStatus.getName(),
-                    "attemptedStatus", newStatus.getName()
+                    "message", "Transição de status inválida: " + 
+                              currentStatus.getDescription() + " → " + newStatus.getDescription(),
+                    "currentStatus", currentStatus.getDescription(),
+                    "attemptedStatus", newStatus.getDescription()
                 );
             }
 
@@ -52,19 +59,15 @@ public class PaymentPutService {
                 "success", true,
                 "message", "Status do pagamento atualizado com sucesso",
                 "paymentId", paymentId,
-                "previousStatus", currentStatus.getName(),
-                "newStatus", newStatus.getName()
+                "previousStatus", currentStatus.getDescription(),
+                "newStatus", newStatus.getDescription()
             );
             
         } catch (IllegalArgumentException e) {
             return Map.of(
                 "success", false,
-                "message", "Status inválido: " + statusStr,
-                "validStatuses", new String[] {
-                    PaymentStatus.PROCESSING_PENDING.name(),
-                    PaymentStatus.PROCESSED.name(),
-                    PaymentStatus.FAILED.name()
-                }
+                "message", e.getMessage(),
+                "validStatuses", PaymentStatus.getValidDescriptions()
             );
         }
     }
