@@ -1,12 +1,13 @@
 package com.RafaelMSantos19.apiTransaction.service;
 
-import com.RafaelMSantos19.apiTransaction.model.PaymentPostModel;
-import com.RafaelMSantos19.apiTransaction.repository.PaymentRepository;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.RafaelMSantos19.apiTransaction.model.PaymentPostModel;
+import com.RafaelMSantos19.apiTransaction.repository.PaymentRepository;
 
 @Service
 public class PaymentPostService {
@@ -78,7 +79,7 @@ public class PaymentPostService {
         
         response.put("payment_value", payment.getValue());
         response.put("paymentDate", payment.getPaymentDate());
-        response.put("status", payment.getStatus());
+        response.put("status", payment.getStatus().getDescription());
         
         return response;
     }
