@@ -1,33 +1,27 @@
 package com.RafaelMSantos19.apiTransaction.handler;
 
-import java.util.HashMap;
+import java.util.Map;
 
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.RafaelMSantos19.apiTransaction.service.PaymentDeleteService.PaymentInvalidStatusException;
 import com.RafaelMSantos19.apiTransaction.service.PaymentDeleteService.PaymentNotFoundException;
-
-import java.util.Map;
+import com.RafaelMSantos19.apiTransaction.service.PaymentPutService.PaymentInvalidStatusException;
 
 @RestControllerAdvice
-@ComponentScan(basePackages = {"com.RafaelMSantos19.apiTransaction"})
 public class PaymentExceptionHandler {
 
-     @ExceptionHandler(PaymentInvalidStatusException.class)
+    @ExceptionHandler(PaymentInvalidStatusException.class)
     public ResponseEntity<Map<String, String>> handlePaymentInvalidStatusException(PaymentInvalidStatusException e) {
-        Map<String, String> response = new HashMap<>();
-        response.put("error", e.getMessage());
+        Map<String, String> response = Map.of("error", e.getMessage());
         return ResponseEntity.badRequest().body(response);
     }
 
     @ExceptionHandler(PaymentNotFoundException.class)
     public ResponseEntity<Map<String, String>> handlePaymentNotFoundException(PaymentNotFoundException e) {
-        Map<String, String> response = new HashMap<>();
-        response.put("error", e.getMessage());
-        return ResponseEntity.notFound().body(response);
+        Map<String, String> response = Map.of("error", e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
-    
 }

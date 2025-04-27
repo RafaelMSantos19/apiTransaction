@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.RafaelMSantos19.apiTransaction.dto.PaymentRequestDTO;
+import com.RafaelMSantos19.apiTransaction.dto.PaymentStatusUpdateDTO;
 import com.RafaelMSantos19.apiTransaction.model.PaymentPostModel;
 import com.RafaelMSantos19.apiTransaction.service.PaymentDeleteService;
 import com.RafaelMSantos19.apiTransaction.service.PaymentGetService;
@@ -94,12 +95,11 @@ public class PaymentController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     public ResponseEntity<Map<String, Object>> updatePaymentStatus(
-            @PathVariable Long id,
-            @RequestParam String status) {
+            @Valid @RequestBody PaymentStatusUpdateDTO paymentStatusUpdateDTO) {
         
-        Map<String, Object> response = paymentPutService.updatePaymentStatus(id, status);
+        Map<String, Object> response = paymentPutService.updatePaymentStatus(paymentStatusUpdateDTO);
         boolean success = (boolean) response.get("success");
         
         if (success) {
