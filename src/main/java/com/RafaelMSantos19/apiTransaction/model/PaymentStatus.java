@@ -1,12 +1,12 @@
 package com.RafaelMSantos19.apiTransaction.model;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public enum PaymentStatus {
     PROCESSING_PENDING("Pendente de Processamento"),
     PROCESSED("Processado com Sucesso"), 
-    FAILED("Processado com Falha");
+    FAILED("Processado com Falha"),
+    INATIVO("Inativo");
 
     private final String description;
 
