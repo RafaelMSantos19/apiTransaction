@@ -28,102 +28,43 @@ public class PaymentGetService {
             String startDateStr, 
             String endDateStr) {
         
-       
-        PaymentStatus status = null;
-        if (statusStr != null) {
-            
-            Optional<PaymentStatus> foundStatus = Arrays.stream(PaymentStatus.values())
+        PaymentStatus status = getPaymentStatus(statusStr);
+        Integer debitCode = getDebitCode(debitCodeStr);
+        LocalDateTime startDate = getLocalDateTime(startDateStr);
+        LocalDateTime endDate = getLocalDateTime(endDateStr);
+
+        return paymentRepository.findPayments(debitCode, cpfCnpj, status, startDate, endDate, PaymentStatus.INATIVO);
+    }
+
+    private PaymentStatus getPaymentStatus(String statusStr) {
+        if (statusStr == null) {
+            return null;
+        }
+        return Arrays.stream(PaymentStatus.values())
                 .filter(s -> s.getDescription().equals(statusStr))
-                .findFirst();
-                
-            if (foundStatus.isPresent()) {
-                status = foundStatus.get();
-            } else {
-                
-                return List.of();
-            }
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Status não encontrado"));
+    }
+
+    private Integer getDebitCode(String debitCodeStr) {
+        if (debitCodeStr == null) {
+            return null;
         }
-        
-
-        Integer debitCode = null;
-        if (debitCodeStr != null) {
-            try {
-                debitCode = Integer.parseInt(debitCodeStr);
-            } catch (NumberFormatException e) {
-               
-                return List.of();
-            }
+        try {
+            return Integer.parseInt(debitCodeStr);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Débito código inválido");
         }
-        
+    }
 
-        LocalDateTime startDate = null;
-        if (startDateStr != null) {
-            try {
-                startDate = LocalDateTime.parse(startDateStr, DATE_FORMATTER);
-            } catch (DateTimeParseException e) {
-                
-                return List.of();
-            }
+    private LocalDateTime getLocalDateTime(String dateStr) {
+        if (dateStr == null) {
+            return null;
         }
-        
-        LocalDateTime endDate = null;
-        if (endDateStr != null) {
-            try {
-                endDate = LocalDateTime.parse(endDateStr, DATE_FORMATTER);
-            } catch (DateTimeParseException e) {
-
-                return List.of();
-            }
-        }
-
-
-        if (startDate != null && endDate != null) {
-
-
-            if (debitCode != null && cpfCnpj != null && status != null) {
-                return paymentRepository.findByDebitCodeAndCpfCnpjAndStatusAndPaymentDateBetweenAndStatusNot(
-                        debitCode, cpfCnpj, status, startDate, endDate, PaymentStatus.INATIVO);
-            } else if (debitCode != null && cpfCnpj != null) {
-                return paymentRepository.findByDebitCodeAndCpfCnpjAndPaymentDateBetweenAndStatusNot(
-                        debitCode, cpfCnpj, startDate, endDate, PaymentStatus.INATIVO);
-            } else if (debitCode != null && status != null) {
-                return paymentRepository.findByDebitCodeAndStatusAndPaymentDateBetweenAndStatusNot(
-                        debitCode, status, startDate, endDate, PaymentStatus.INATIVO);
-            } else if (cpfCnpj != null && status != null) {
-                return paymentRepository.findByCpfCnpjAndStatusAndPaymentDateBetweenAndStatusNot(
-                        cpfCnpj, status, startDate, endDate, PaymentStatus.INATIVO);
-            } else if (debitCode != null) {
-                return paymentRepository.findByDebitCodeAndPaymentDateBetweenAndStatusNot(
-                        debitCode, startDate, endDate, PaymentStatus.INATIVO);
-            } else if (cpfCnpj != null) {
-                return paymentRepository.findByCpfCnpjAndPaymentDateBetweenAndStatusNot(
-                        cpfCnpj, startDate, endDate, PaymentStatus.INATIVO);
-            } else if (status != null) {
-                return paymentRepository.findByStatusAndPaymentDateBetweenAndStatusNot(
-                        status, startDate, endDate, PaymentStatus.INATIVO);
-            } else {
-                return paymentRepository.findByPaymentDateBetweenAndStatusNot(startDate, endDate, PaymentStatus.INATIVO);
-            }
-        } else {
-
-
-            if (debitCode != null && cpfCnpj != null && status != null) {
-                return paymentRepository.findByDebitCodeAndCpfCnpjAndStatusAndStatusNot(debitCode, cpfCnpj, status, PaymentStatus.INATIVO);
-            } else if (debitCode != null && cpfCnpj != null) {
-                return paymentRepository.findByDebitCodeAndCpfCnpjAndStatusNot(debitCode, cpfCnpj, PaymentStatus.INATIVO);
-            } else if (debitCode != null && status != null) {
-                return paymentRepository.findByDebitCodeAndStatusAndStatusNot(debitCode, status, PaymentStatus.INATIVO);
-            } else if (cpfCnpj != null && status != null) {
-                return paymentRepository.findByCpfCnpjAndStatusAndStatusNot(cpfCnpj, status, PaymentStatus.INATIVO);
-            } else if (debitCode != null) {
-                return paymentRepository.findByDebitCodeAndStatusNot(debitCode, PaymentStatus.INATIVO);
-            } else if (cpfCnpj != null) {
-                return paymentRepository.findByCpfCnpjAndStatusNot(cpfCnpj, PaymentStatus.INATIVO);
-            } else if (status != null) {
-                return paymentRepository.findByStatusAndStatusNot(status, PaymentStatus.INATIVO);
-            } else {
-                return paymentRepository.findByStatusNot(PaymentStatus.INATIVO);
-            }
+        try {
+            return LocalDateTime.parse(dateStr, DATE_FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new RuntimeException("Data inválida");
         }
     }
 }

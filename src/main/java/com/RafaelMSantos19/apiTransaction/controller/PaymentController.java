@@ -51,9 +51,6 @@ public class PaymentController {
         this.paymentPutService = paymentPutService;
         this.paymentDeleteService = paymentDeleteService;
         this.objectMapper = objectMapper;
-        
-        this.objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-        this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
     @GetMapping
@@ -73,19 +70,9 @@ public class PaymentController {
             @Valid @RequestBody PaymentRequestDTO paymentRequest) {
         
         try {
-            System.out.println("JSON recebido: " + objectMapper.writeValueAsString(paymentRequest));
-    
-            PaymentPostModel payment = new PaymentPostModel();
-            payment.setDebitCode(paymentRequest.getDebitCode());
-            payment.setCpfCnpj(paymentRequest.getCpfCnpj());
-            payment.setPaymentMethod(paymentRequest.getPaymentMethod());
-            payment.setCard(paymentRequest.getCard());
-            payment.setValue(paymentRequest.getValue());
-    
+            PaymentPostModel payment = paymentRequest.toPaymentPostModel();
             Map<String, Object> response = paymentPostService.service(payment);
-            
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    
         } catch (Exception e) {
             return ResponseEntity.badRequest()
                     .body(Map.of(
@@ -100,9 +87,7 @@ public class PaymentController {
             @Valid @RequestBody PaymentStatusUpdateDTO paymentStatusUpdateDTO) {
         
         Map<String, Object> response = paymentPutService.updatePaymentStatus(paymentStatusUpdateDTO);
-        boolean success = (boolean) response.get("success");
-        
-        if (success) {
+        if ((boolean) response.get("success")) {
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.badRequest().body(response);
