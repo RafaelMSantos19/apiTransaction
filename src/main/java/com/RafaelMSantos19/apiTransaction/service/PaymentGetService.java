@@ -81,48 +81,48 @@ public class PaymentGetService {
 
 
             if (debitCode != null && cpfCnpj != null && status != null) {
-                return paymentRepository.findByDebitCodeAndCpfCnpjAndStatusAndPaymentDateBetween(
-                        debitCode, cpfCnpj, status, startDate, endDate);
+                return paymentRepository.findByDebitCodeAndCpfCnpjAndStatusAndPaymentDateBetweenAndStatusNot(
+                        debitCode, cpfCnpj, status, startDate, endDate, PaymentStatus.INATIVO);
             } else if (debitCode != null && cpfCnpj != null) {
-                return paymentRepository.findByDebitCodeAndCpfCnpjAndPaymentDateBetween(
-                        debitCode, cpfCnpj, startDate, endDate);
+                return paymentRepository.findByDebitCodeAndCpfCnpjAndPaymentDateBetweenAndStatusNot(
+                        debitCode, cpfCnpj, startDate, endDate, PaymentStatus.INATIVO);
             } else if (debitCode != null && status != null) {
-                return paymentRepository.findByDebitCodeAndStatusAndPaymentDateBetween(
-                        debitCode, status, startDate, endDate);
+                return paymentRepository.findByDebitCodeAndStatusAndPaymentDateBetweenAndStatusNot(
+                        debitCode, status, startDate, endDate, PaymentStatus.INATIVO);
             } else if (cpfCnpj != null && status != null) {
-                return paymentRepository.findByCpfCnpjAndStatusAndPaymentDateBetween(
-                        cpfCnpj, status, startDate, endDate);
+                return paymentRepository.findByCpfCnpjAndStatusAndPaymentDateBetweenAndStatusNot(
+                        cpfCnpj, status, startDate, endDate, PaymentStatus.INATIVO);
             } else if (debitCode != null) {
-                return paymentRepository.findByDebitCodeAndPaymentDateBetween(
-                        debitCode, startDate, endDate);
+                return paymentRepository.findByDebitCodeAndPaymentDateBetweenAndStatusNot(
+                        debitCode, startDate, endDate, PaymentStatus.INATIVO);
             } else if (cpfCnpj != null) {
-                return paymentRepository.findByCpfCnpjAndPaymentDateBetween(
-                        cpfCnpj, startDate, endDate);
+                return paymentRepository.findByCpfCnpjAndPaymentDateBetweenAndStatusNot(
+                        cpfCnpj, startDate, endDate, PaymentStatus.INATIVO);
             } else if (status != null) {
-                return paymentRepository.findByStatusAndPaymentDateBetween(
-                        status, startDate, endDate);
+                return paymentRepository.findByStatusAndPaymentDateBetweenAndStatusNot(
+                        status, startDate, endDate, PaymentStatus.INATIVO);
             } else {
-                return paymentRepository.findByPaymentDateBetween(startDate, endDate);
+                return paymentRepository.findByPaymentDateBetweenAndStatusNot(startDate, endDate, PaymentStatus.INATIVO);
             }
         } else {
 
 
             if (debitCode != null && cpfCnpj != null && status != null) {
-                return paymentRepository.findByDebitCodeAndCpfCnpjAndStatus(debitCode, cpfCnpj, status);
+                return paymentRepository.findByDebitCodeAndCpfCnpjAndStatusAndStatusNot(debitCode, cpfCnpj, status, PaymentStatus.INATIVO);
             } else if (debitCode != null && cpfCnpj != null) {
-                return paymentRepository.findByDebitCodeAndCpfCnpj(debitCode, cpfCnpj);
+                return paymentRepository.findByDebitCodeAndCpfCnpjAndStatusNot(debitCode, cpfCnpj, PaymentStatus.INATIVO);
             } else if (debitCode != null && status != null) {
-                return paymentRepository.findByDebitCodeAndStatus(debitCode, status);
+                return paymentRepository.findByDebitCodeAndStatusAndStatusNot(debitCode, status, PaymentStatus.INATIVO);
             } else if (cpfCnpj != null && status != null) {
-                return paymentRepository.findByCpfCnpjAndStatus(cpfCnpj, status);
+                return paymentRepository.findByCpfCnpjAndStatusAndStatusNot(cpfCnpj, status, PaymentStatus.INATIVO);
             } else if (debitCode != null) {
-                return paymentRepository.findByDebitCode(debitCode);
+                return paymentRepository.findByDebitCodeAndStatusNot(debitCode, PaymentStatus.INATIVO);
             } else if (cpfCnpj != null) {
-                return paymentRepository.findByCpfCnpj(cpfCnpj);
+                return paymentRepository.findByCpfCnpjAndStatusNot(cpfCnpj, PaymentStatus.INATIVO);
             } else if (status != null) {
-                return paymentRepository.findByStatus(status);
+                return paymentRepository.findByStatusAndStatusNot(status, PaymentStatus.INATIVO);
             } else {
-                return paymentRepository.findAll();
+                return paymentRepository.findByStatusNot(PaymentStatus.INATIVO);
             }
         }
     }
