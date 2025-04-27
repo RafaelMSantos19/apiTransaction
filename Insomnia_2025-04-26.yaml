@@ -1,0 +1,524 @@
+type: collection.insomnia.rest/5.0
+name: api payment
+meta:
+  id: wrk_056b0126018e4d99ab55581551092408
+  created: 1745633787109
+  modified: 1745633787109
+collection:
+  - name: Post
+    meta:
+      id: fld_cea7c2e948134a77a3a42a2a79f7b4c0
+      created: 1745685896812
+      modified: 1745685906115
+      sortKey: -1745685896812
+    children:
+      - url: localhost:8080/api/v1/payments
+        name: Payment
+        meta:
+          id: req_efd8c3cfb6df4faa9d86f213c2eae0c6
+          created: 1745633829223
+          modified: 1745696403334
+          isPrivate: false
+          sortKey: -1745685904170
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "debitCode": 450001,
+              "cpfCnpj": "12345678901",
+              "paymentMethod": "cartao_debito",
+              "card": "4111111111111111",
+              "value": 100.50
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_0eccb469a1eb4f518fa82752da873984
+            disabled: false
+          - name: User-Agent
+            value: insomnia/11.0.1
+            id: pair_996afb78681b429280baeb582d881f05
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/api/v1/payments
+        name: Payment PIX
+        meta:
+          id: req_80218cd53fff4ff082d4ff85a7b4707d
+          created: 1745685916892
+          modified: 1745696470362
+          isPrivate: false
+          sortKey: -1745659848415
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "debitCode": 450002,
+              "cpfCnpj": "12345678901",
+              "paymentMethod": "PIX",
+              "value": 145.99
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_0eccb469a1eb4f518fa82752da873984
+            disabled: false
+          - name: User-Agent
+            value: insomnia/11.0.1
+            id: pair_996afb78681b429280baeb582d881f05
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/api/v1/payments
+        name: Payment Boleto
+        meta:
+          id: req_b166b31c3ffa404d9a27c1ae945c575d
+          created: 1745686022763
+          modified: 1745696482532
+          isPrivate: false
+          sortKey: -1745646820537.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "debitCode": 450003,
+              "cpfCnpj": "12345678901",
+              "paymentMethod": "BOLETO",
+              "value": 57.93
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_0eccb469a1eb4f518fa82752da873984
+            disabled: false
+          - name: User-Agent
+            value: insomnia/11.0.1
+            id: pair_996afb78681b429280baeb582d881f05
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/api/v1/payments
+        name: Payment Card credito
+        meta:
+          id: req_29b868b0541b43ac8e2f6178fbaeef5d
+          created: 1745686072336
+          modified: 1745696463941
+          isPrivate: false
+          sortKey: -1745672876292.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "debitCode": 450006,
+              "cpfCnpj": "12345678901",
+              "paymentMethod": "cartao_credito",
+              "card": "4111111111111111",
+              "value": 100.50
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_0eccb469a1eb4f518fa82752da873984
+            disabled: false
+          - name: User-Agent
+            value: insomnia/11.0.1
+            id: pair_996afb78681b429280baeb582d881f05
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/api/v1/payments
+        name: Payment Card Debit
+        meta:
+          id: req_73bad10605034639be278695a00ffc69
+          created: 1745686082971
+          modified: 1745696457387
+          isPrivate: false
+          sortKey: -1745679390231.25
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "debitCode": 450005,
+              "cpfCnpj": "12345678901",
+              "paymentMethod": "cartao_debito",
+              "card": "4111111111111111",
+              "value": 100.50
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_0eccb469a1eb4f518fa82752da873984
+            disabled: false
+          - name: User-Agent
+            value: insomnia/11.0.1
+            id: pair_996afb78681b429280baeb582d881f05
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/api/v1/payments
+        name: Payment Fail Request
+        meta:
+          id: req_611f33eb48fe4e168025705a8447cdf8
+          created: 1745686666610
+          modified: 1745696447319
+          isPrivate: false
+          sortKey: -1745682647200.625
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "debitCode": 0,
+              "cpfCnpj": "123",
+              "paymentMethod": "",
+              "value": -10
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_0eccb469a1eb4f518fa82752da873984
+            disabled: false
+          - name: User-Agent
+            value: insomnia/11.0.1
+            id: pair_996afb78681b429280baeb582d881f05
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/api/v1/payments
+        name: Payment PIX with card ( fail )
+        meta:
+          id: req_f7a36fbe40774eafb632d54db9b6e0fe
+          created: 1745692289938
+          modified: 1745696476573
+          isPrivate: false
+          sortKey: -1745653334476.25
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "debitCode": 450002,
+              "cpfCnpj": "12345678901",
+              "paymentMethod": "PIX",
+            	 "card": "4111111111111111",
+              "value": 145.99
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_0eccb469a1eb4f518fa82752da873984
+            disabled: false
+          - name: User-Agent
+            value: insomnia/11.0.1
+            id: pair_996afb78681b429280baeb582d881f05
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8080/api/v1/payments
+        name: Payment Boleto with card ( fail )
+        meta:
+          id: req_74990d8f6f3b4d618d6f62609fdf4f0e
+          created: 1745694891963
+          modified: 1745696488786
+          isPrivate: false
+          sortKey: -1745640306598.75
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "debitCode": 450003,
+              "cpfCnpj": "12345678901",
+              "paymentMethod": "BOLETO",
+            	"card": "4111111111111111",
+              "value": 57.93
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_0eccb469a1eb4f518fa82752da873984
+            disabled: false
+          - name: User-Agent
+            value: insomnia/11.0.1
+            id: pair_996afb78681b429280baeb582d881f05
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Put
+    meta:
+      id: fld_affde51ab4d142e6a2aabd382cd8f6d9
+      created: 1745691890711
+      modified: 1745691894734
+      sortKey: -1745691890711
+    children:
+      - url: http://localhost:8080/api/v1/payments/1
+        name: to processed
+        meta:
+          id: req_568ace2d5fda43a097fcea7146a8a8ea
+          created: 1745691900297
+          modified: 1745696434066
+          isPrivate: false
+          sortKey: -1745691900297
+        method: PUT
+        parameters:
+          - name: status
+            value: Processado com Sucesso
+            disabled: false
+            id: pair_67ef992011204c6aa134005a4f309052
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/v1/payments/2
+        name: to failed
+        meta:
+          id: req_d2f38ca73cac4215910661e7f5bd012a
+          created: 1745693130946
+          modified: 1745696427769
+          isPrivate: false
+          sortKey: -1745693130946
+        method: PUT
+        parameters:
+          - name: status
+            value: Processado com Falha
+            disabled: false
+            id: pair_531fe7e6c23743f4adb53b0e78c50136
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/v1/payments/1
+        name: processed failed
+        meta:
+          id: req_e1b3bd810ad44d82af40f9da6f1de08f
+          created: 1745693196759
+          modified: 1745696416048
+          isPrivate: false
+          sortKey: -1745693196759
+        method: PUT
+        parameters:
+          - name: status
+            value: FAILED
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/v1/payments/3
+        name: failed to presse
+        meta:
+          id: req_1d022e5410a04efab4a5d84800049bf6
+          created: 1745693350753
+          modified: 1745696420927
+          isPrivate: false
+          sortKey: -1745693163852.5
+        method: PUT
+        parameters:
+          - name: status
+            value: PROCESSING_PENDING
+            disabled: false
+            id: pair_4308e6c1843548aba51ea2faa21c22d9
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Get
+    meta:
+      id: fld_abf8f1a198e841cca44f5094fe42bff3
+      created: 1745696516487
+      modified: 1745696516487
+      sortKey: -1745696516487
+    children:
+      - url: localhost:8080/api/v1/payments
+        name: Payment
+        meta:
+          id: req_5304ea3c9690487698b0a58f8b3f970d
+          created: 1745633792660
+          modified: 1745698390966
+          isPrivate: false
+          sortKey: -1745698385739
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/v1/payments
+        name: New Request
+        meta:
+          id: req_cc7f4891d1e74813a224628afdd57204
+          created: 1745698385839
+          modified: 1745706040119
+          isPrivate: false
+          sortKey: -1745698385839
+        method: GET
+        parameters:
+          - name: debitCode
+            value: "450001"
+            disabled: true
+            id: pair_a197c55258404f2dbf986e50141d459b
+          - id: pair_f577f35527874eb4bf04f62a0bb34ccf
+            name: cpfCnpj
+            value: "12345678901"
+            disabled: true
+          - name: status
+            value: Pendente de Processamento
+            disabled: false
+            id: pair_6aa0f39cd681402f957a28af5c4bd5f8
+          - name: startDate
+            value: 2023-01-01T00:00:00
+            disabled: true
+            id: pair_c430452eaba14368b9c54ae6fc65f1a9
+          - id: pair_e6558cbab4854db8a4f9bddb46b46dbe
+            name: finalDate
+            value: 2026-01-01T00:00:00
+            disabled: true
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/v1/payments
+        name: Get Requests
+        meta:
+          id: req_5d2031d0d7c9437b89ebf4ef5d22af25
+          created: 1745706305574
+          modified: 1745714490320
+          isPrivate: false
+          sortKey: -1745706305574
+        method: GET
+        parameters:
+          - name: debitCode
+            value: "450002"
+            disabled: false
+            id: pair_ae9393345b474a7d8a86fed532cfc611
+          - name: cpfCnpj
+            value: "12345678901"
+            disabled: false
+            id: pair_f5bb2564980647aa990711ee1ff6a93e
+          - name: status
+            value: Pendente de Processamento
+            disabled: false
+            id: pair_7e8ad358dd2a4c3ab2f21b3f22248754
+          - name: startDate
+            value: 2025-04-25T00:00:00
+            disabled: false
+            id: pair_cc445ad4011a47589b32b6e67a43c4d3
+          - name: endDate
+            value: 2025-04-27T23:59:59
+            disabled: false
+            id: pair_70806e48e01e49059795fdcfd9b8957d
+        headers:
+          - name: Accept
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_431bd8d6ebf0dedf34b8ce7237c92dff7e7a1189
+    created: 1745633787114
+    modified: 1745633787114
+environments:
+  name: Base Environment
+  meta:
+    id: env_431bd8d6ebf0dedf34b8ce7237c92dff7e7a1189
+    created: 1745633787112
+    modified: 1745633787112
+    isPrivate: false
