@@ -173,7 +173,7 @@ curl --request DELETE \
    ```
 2. Entre no diretório do projeto:
    ```bash
-   cd api-transacoes
+   cd apiTransaction
    ```
 3. Execute a aplicação:
    ```bash
